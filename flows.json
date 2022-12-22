@@ -1,0 +1,416 @@
+[
+    {
+        "id": "a6ea044285ef7b27",
+        "type": "tab",
+        "label": "in-cse",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "eacb52723904c249",
+        "type": "inject",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 280,
+        "y": 80,
+        "wires": [
+            [
+                "7d5af841bf28e725"
+            ]
+        ]
+    },
+    {
+        "id": "b475905f783d6618",
+        "type": "debug",
+        "z": "a6ea044285ef7b27",
+        "name": "debug 29",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "7d5af841bf28e725",
+        "type": "Container",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "platform": "8a9adc92d46cf55c",
+        "name1": "bf3bd7a4b572381f",
+        "viewtype": "DATA",
+        "viewunid1": "",
+        "x": 580,
+        "y": 80,
+        "wires": [
+            [
+                "b475905f783d6618"
+            ]
+        ]
+    },
+    {
+        "id": "1766bbd083f74743",
+        "type": "http in",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "url": "/locations",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 290,
+        "y": 200,
+        "wires": [
+            [
+                "7f24a2f7051741ec"
+            ]
+        ]
+    },
+    {
+        "id": "7f24a2f7051741ec",
+        "type": "http request",
+        "z": "a6ea044285ef7b27",
+        "name": "get from in-cse",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:8282/~/in-cse/in-name/DATA/la",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "bd0acf16b7759a85"
+            ]
+        ]
+    },
+    {
+        "id": "bd0acf16b7759a85",
+        "type": "xml",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "27fe8360a8844325"
+            ]
+        ]
+    },
+    {
+        "id": "ebcd2f9839ca730c",
+        "type": "xml",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 1130,
+        "y": 200,
+        "wires": [
+            [
+                "e393828ba1e74ae9"
+            ]
+        ]
+    },
+    {
+        "id": "27fe8360a8844325",
+        "type": "function",
+        "z": "a6ea044285ef7b27",
+        "name": "function 7",
+        "func": "msg.payload=msg.payload[\"m2m:cin\"].con[0];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 200,
+        "wires": [
+            [
+                "ebcd2f9839ca730c"
+            ]
+        ]
+    },
+    {
+        "id": "080c4d54b076823a",
+        "type": "debug",
+        "z": "a6ea044285ef7b27",
+        "name": "debug 37",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f6ec56ee536c8e62",
+        "type": "http response",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1450,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "e393828ba1e74ae9",
+        "type": "function",
+        "z": "a6ea044285ef7b27",
+        "name": "function 8",
+        "func": "msg.payload = \"{acceleration:\" + msg.payload.obj.str[0].$.val + \",audio:\" + msg.payload.obj.str[1].$.val + \",RFID:\" + msg.payload.obj.str[2].$.val + \",User:\"+ msg.payload.obj.str[3].$.val +\"}\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1320,
+        "y": 200,
+        "wires": [
+            [
+                "080c4d54b076823a",
+                "f6ec56ee536c8e62"
+            ]
+        ]
+    },
+    {
+        "id": "cf5879a063216721",
+        "type": "http in",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "url": "/SENSOR",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 220,
+        "y": 420,
+        "wires": [
+            [
+                "7743075266e4f9b3",
+                "536a83d510d538aa"
+            ]
+        ]
+    },
+    {
+        "id": "7743075266e4f9b3",
+        "type": "xml",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 430,
+        "y": 420,
+        "wires": [
+            [
+                "9fec1df4a70038b1"
+            ]
+        ]
+    },
+    {
+        "id": "9fec1df4a70038b1",
+        "type": "function",
+        "z": "a6ea044285ef7b27",
+        "name": "get state",
+        "func": "var data = msg.payload[\"m2m:sgn\"].nev[0].rep[0][\"m2m:cin\"][0].con[0];\nmsg.payload = data\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 420,
+        "wires": [
+            [
+                "50bb29496ee91b7e"
+            ]
+        ]
+    },
+    {
+        "id": "50bb29496ee91b7e",
+        "type": "xml",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "97e1818667a7fa2f"
+            ]
+        ]
+    },
+    {
+        "id": "97e1818667a7fa2f",
+        "type": "function",
+        "z": "a6ea044285ef7b27",
+        "name": "set object",
+        "func": "var New = { acceleration: null, audio: null, rfid: null ,user:null ,act: null};\nNew.acceleration = msg.payload.obj.str[0].$.val;\nNew.audio = msg.payload.obj.str[1].$.val;\nNew.rfid = msg.payload.obj.str[2].$.val;\nNew.user = msg.payload.obj.str[3].$.val;\n\nif (parseInt(msg.payload.obj.str[0].$.val) >25 && parseInt(msg.payload.obj.str[1].$.val) <10 && msg.payload.obj.str[2].$.val==\"5\") {\n    New.act = \"Brushing Teeth\";\n}\nelse if (parseInt(msg.payload.obj.str[0].$.val) < 10 && parseInt(msg.payload.obj.str[1].$.val) > 30 && msg.payload.obj.str[2].$.val == \"2\") {\n    New.act = \"Watching TV\";\n}\nelse if (parseInt(msg.payload.obj.str[0].$.val) < 10 && parseInt(msg.payload.obj.str[1].$.val) < 5 && msg.payload.obj.str[2].$.val == \"1\") {\n    New.act = \"Using Phone\";\n}\nelse{\n    New.act = \"Making Coffee\";\n    New.user=\"A,B\"\n}\n\nmsg.payload = New;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 420,
+        "wires": [
+            [
+                "121f5b7fde157502"
+            ]
+        ]
+    },
+    {
+        "id": "121f5b7fde157502",
+        "type": "function",
+        "z": "a6ea044285ef7b27",
+        "name": "set payload and headers",
+        "func": "/*jshint multistr: true */\nvar data = '<m2m:cin xmlns:m2m=\"http://www.onem2m.org/xml/protocols\">\\\n\t<cnf>message</cnf>\\\n\t<con>\\\n\t  &lt;obj&gt;\\\n\t  \t&lt;str name=&quot;user&quot; val=&quot;'+ msg.payload.user + '&quot;/&gt;\\\n\t\t&lt;str name=&quot;acceleration&quot; val=&quot;'+ msg.payload.acceleration + '&quot;/&gt;\\\n\t\t&lt;str name=&quot;audio&quot; val=&quot;'+ msg.payload.audio + '&quot;/&gt;\\\n\t\t&lt;str name=&quot;RFID&quot; val=&quot;'+ msg.payload.rfid + '&quot;/&gt;\\\n\t\t&lt;str name=&quot;act&quot; val=&quot;'+ msg.payload.act + '&quot;/&gt;\\\n\t  &lt;/obj&gt;\\\n\t</con>\\\n</m2m:cin>';\n\nmsg.payload = data;\nmsg.headers = {};\nmsg.headers['X-M2M-Origin'] = 'admin:admin';\nmsg.headers['Content-Type'] = 'application/xml;ty=4';\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1290,
+        "y": 420,
+        "wires": [
+            [
+                "adee52351e5f09b5",
+                "bd5914529cc0a585"
+            ]
+        ]
+    },
+    {
+        "id": "adee52351e5f09b5",
+        "type": "http request",
+        "z": "a6ea044285ef7b27",
+        "name": "post to in-cse",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "http://127.0.0.1:8080/~/in-cse/in-name/SENSOR/DATA",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "basic",
+        "senderr": false,
+        "headers": [],
+        "x": 1510,
+        "y": 420,
+        "wires": [
+            [
+                "bc2b0b3698c00ad2",
+                "fba6271c9e1cece4"
+            ]
+        ]
+    },
+    {
+        "id": "bc2b0b3698c00ad2",
+        "type": "http response",
+        "z": "a6ea044285ef7b27",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1670,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "536a83d510d538aa",
+        "type": "debug",
+        "z": "a6ea044285ef7b27",
+        "name": "debug 38",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "bd5914529cc0a585",
+        "type": "debug",
+        "z": "a6ea044285ef7b27",
+        "name": "debug 39",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1420,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "fba6271c9e1cece4",
+        "type": "debug",
+        "z": "a6ea044285ef7b27",
+        "name": "debug 40",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1660,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "8a9adc92d46cf55c",
+        "type": "xN_CSE",
+        "platform": "in-cse",
+        "URLBase": "http://127.0.0.1:8282/~/in-cse/in-name",
+        "user": "admin",
+        "password": "admin"
+    },
+    {
+        "id": "bf3bd7a4b572381f",
+        "type": "AE",
+        "appId": "SENSOR"
+    }
+]
